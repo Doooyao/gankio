@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <com.example.administrator.mygankio.gankmain.searchpage.SearchCategoryTabView
+        android:text="Android"
+        android:textColor="@color/colorTextPrimary"
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.example.administrator.mygankio.gankmain.searchpage.SearchCategoryTabView
+        android:textColor="@color/colorTextPrimary"
+        android:text="Android"
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.example.administrator.mygankio.gankmain.searchpage.SearchCategoryTabView
+        android:textColor="@color/colorTextPrimary"
+        android:text="Android"
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.example.administrator.mygankio.gankmain.searchpage.SearchCategoryTabView
+        android:text="Android"
+        android:textColor="@color/colorTextPrimary"
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.example.administrator.mygankio.gankmain.searchpage.SearchCategoryTabView
+        android:textColor="@color/colorTextPrimary"
+        android:text="Android"
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.example.administrator.mygankio.gankmain.searchpage.SearchCategoryTabView
+        android:textColor="@color/colorTextPrimary"
+        android:text="Android"
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.example.administrator.mygankio.gankmain.searchpage.SearchCategoryTabView
+        android:textColor="@color/colorTextPrimary"
+        android:text="Android"
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.example.administrator.mygankio.gankmain.searchpage.SearchCategoryTabView
+        android:textColor="@color/colorTextPrimary"
+        android:text="Android"
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

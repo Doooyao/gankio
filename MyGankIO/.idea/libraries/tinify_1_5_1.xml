@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="tinify-1.5.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tinify/tinify/1.5.1/c5c16596af93129b346ddf2605c11a5ee876bada/tinify-1.5.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tinify/tinify/1.5.1/5b034c771a28a3a224f37c70499d743306caea8f/tinify-1.5.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
