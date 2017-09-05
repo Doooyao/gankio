@@ -1,24 +1,21 @@
 package com.example.administrator.mygankio.data;
 
-import java.util.List;
-
 /**
- * Created by Administrator on 2017/7/21.
+ * Created by tdfz on 2017/9/5.
  */
 
-public class GankBean {
+public class GankNicePhoto {
 
     /**
-     * _id : 59ad6186421aa901c1c0a8df
-     * createdAt : 2017-09-04T22:21:58.464Z
-     * desc : MacOS版微信小助手 功能: 自动回复、消息防撤回、远程控制、微信多开
-     * images : ["http://img.gank.io/879d6bdd-a345-44a9-8870-1a96fb883f0c"]
+     * _id : 59aca203421aa901c1c0a8d8
+     * createdAt : 2017-09-04T08:44:51.44Z
+     * desc : 09-04
      * publishedAt : 2017-09-05T11:29:05.240Z
-     * source : web
-     * type : App
-     * url : https://github.com/TKkk-iOSer/WeChatPlugin-MacOS
+     * source : chrome
+     * type : 福利
+     * url : https://ws1.sinaimg.cn/large/610dc034ly1fj78mpyvubj20u011idjg.jpg
      * used : true
-     * who : TK
+     * who : dmj
      */
 
     private String _id;
@@ -30,7 +27,6 @@ public class GankBean {
     private String url;
     private boolean used;
     private String who;
-    private List<String> images;
 
     public String get_id() {
         return _id;
@@ -102,13 +98,5 @@ public class GankBean {
 
     public void setWho(String who) {
         this.who = who;
-    }
-
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
     }
 }

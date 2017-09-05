@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.example.administrator.mygankio.R;
 import com.example.administrator.mygankio.adapter.MainFragmentPagerAdapter;
+import com.example.administrator.mygankio.gankmain.homePage.HomePresenter;
 import com.example.administrator.mygankio.gankmain.searchpage.SearchFragment;
 import com.example.administrator.mygankio.gankmain.homePage.HomeFragment;
 import com.example.administrator.mygankio.gankmain.searchpage.SearchPresenter;
@@ -38,6 +39,7 @@ public class GankMainActivity extends AppCompatActivity implements View.OnClickL
         SearchFragment searchFragment = new SearchFragment();
         SearchPresenter searchPresenter = new SearchPresenter(searchFragment);
         HomeFragment homeFragment = new HomeFragment();
+        HomePresenter homePresenter = new HomePresenter(homeFragment);
         final List<Fragment> fragments = new ArrayList<>();
         fragments.add(homeFragment);
         fragments.add(searchFragment);
