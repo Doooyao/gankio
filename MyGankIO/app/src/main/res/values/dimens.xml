@@ -4,5 +4,6 @@
     <dimen name="category_listitem_image_height">64dp</dimen>
     <dimen name="searchview_height">56dp</dimen>
     <dimen name="categorytab_height">24dp</dimen>
-    <dimen name="homepage_card_height">72dp</dimen>
+    <dimen name="homepage_card_height">160dp</dimen>
+    <dimen name="homepage_card_width">240dp</dimen>
 </resources>

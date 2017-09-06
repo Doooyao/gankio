@@ -31,6 +31,7 @@ public class HomeFragment extends Fragment implements HomeContract.view{
     RecyclerView homeRecycleView;
 
     View root;
+    private HomePageListAdapter homePageListAdapter;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.home_fragment,container,false);
@@ -47,10 +48,7 @@ public class HomeFragment extends Fragment implements HomeContract.view{
         homeRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
 //设置Item增加、移除动画
         homeRecycleView.setItemAnimator(new DefaultItemAnimator());
-//添加分割线
-        homeRecycleView.addItemDecoration(new DividerItemDecoration(
-                getActivity(), DividerItemDecoration.VERTICAL));
-        HomePageListAdapter homePageListAdapter= new HomePageListAdapter(getContext());
+        homePageListAdapter = new HomePageListAdapter(getContext());
         homeRecycleView.setAdapter(homePageListAdapter);
     }
 
@@ -81,5 +79,10 @@ public class HomeFragment extends Fragment implements HomeContract.view{
     @Override
     public void refreshRecycleview() {
 
+    }
+
+    @Override
+    public HomePageListAdapter getHomePageAdapter() {
+        return homePageListAdapter;
     }
 }
