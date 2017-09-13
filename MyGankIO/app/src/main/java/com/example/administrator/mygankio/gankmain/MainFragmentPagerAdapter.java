@@ -1,4 +1,4 @@
-package com.example.administrator.mygankio.adapter;
+package com.example.administrator.mygankio.gankmain;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

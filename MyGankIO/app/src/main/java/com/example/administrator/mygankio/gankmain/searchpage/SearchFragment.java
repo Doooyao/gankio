@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.administrator.mygankio.R;
-import com.example.administrator.mygankio.adapter.SearchListAdapter;
 import com.example.administrator.mygankio.data.GankSearchBean;
 
 import java.util.ArrayList;

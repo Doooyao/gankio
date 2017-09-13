@@ -1,11 +1,9 @@
 package com.example.administrator.mygankio.gankmain.searchpage;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import com.example.administrator.mygankio.BaseMvpPresenter;
 import com.example.administrator.mygankio.BaseMvpView;
-import com.example.administrator.mygankio.adapter.SearchListAdapter;
 import com.example.administrator.mygankio.data.GankSearchBean;
 
 import java.util.List;

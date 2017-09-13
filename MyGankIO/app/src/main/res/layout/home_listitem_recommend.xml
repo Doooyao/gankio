@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.CardView
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/home_item_recommend_icon"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_todaypush_white"
+                android:background="@drawable/circle"
+                android:layout_alignParentTop="true"
+                android:layout_width="72dp"
+                android:layout_height="72dp" />
+            <TextView
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:textSize="24sp"
+                android:id="@+id/home_item_recommend_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/home_item_recommend_date"
+                android:id="@+id/home_item_recommend_tv"
+                android:text="0000"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/home_item_recommend_icon"
+                android:src="@drawable/ic_down_black_24dp"
+                android:id="@+id/home_item_recommend_spread"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+            <RelativeLayout
+                android:layout_below="@+id/home_item_recommend_icon"
+                android:layout_toLeftOf="@+id/home_item_recommend_spread"
+                android:id="@+id/home_item_recommend_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"></RelativeLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

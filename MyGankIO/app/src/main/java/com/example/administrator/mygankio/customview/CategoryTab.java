@@ -147,7 +147,6 @@ public class CategoryTab extends android.support.v7.widget.AppCompatImageView {
     {
         //// TODO: 2017/9/6 下次优化
         Bitmap tabBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        System.out.println(getWidth()+"+"+getHeight());
         Canvas tabcanvas = new Canvas(tabBitmap);
         beCheckedDrawBitmap(tabcanvas);
         canvas.drawBitmap(tabBitmap,0,0,new Paint());

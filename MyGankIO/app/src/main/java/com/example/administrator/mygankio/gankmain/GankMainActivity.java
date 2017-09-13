@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.administrator.mygankio.R;
-import com.example.administrator.mygankio.adapter.MainFragmentPagerAdapter;
 import com.example.administrator.mygankio.gankmain.homePage.HomePresenter;
 import com.example.administrator.mygankio.gankmain.searchpage.SearchFragment;
 import com.example.administrator.mygankio.gankmain.homePage.HomeFragment;

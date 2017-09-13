@@ -22,9 +22,9 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    @GET("api/day/{year}/{month}/{day}")
+    @GET("api/day/{date}")
     Observable<GankDateDataBean> getGankByDate(
-            @Path("year") String year,@Path("month") String month,@Path("day") String day
+            @Path("date") String date
     );
 
     @GET("/api/search/query/{query}/category/{category}/count/{count}/page/{page}")
@@ -33,4 +33,8 @@ public interface ApiService {
     );
     @GET("/api/day/history")
     Observable<GankPushDate> getGankPushDate();
+    @GET("api/history/content/day/{date}")
+    Observable<GankContentHistory> getGankContentHistory(
+            @Path("date") String date
+    );
 }

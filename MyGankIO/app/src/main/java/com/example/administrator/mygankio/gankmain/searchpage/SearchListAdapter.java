@@ -1,7 +1,6 @@
-package com.example.administrator.mygankio.adapter;
+package com.example.administrator.mygankio.gankmain.searchpage;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
