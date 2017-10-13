@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.Callback;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -27,14 +28,18 @@ public interface ApiService {
             @Path("date") String date
     );
 
-    @GET("/api/search/query/{query}/category/{category}/count/{count}/page/{page}")
+    @GET("api/search/query/{query}/category/{category}/count/{count}/page/{page}")
     Observable<GankSearchBean> searchGank(
             @Path("query") String query,@Path("category") String category,@Path("count") int count,@Path("page") int page
     );
-    @GET("/api/day/history")
+    @GET("api/day/history")
     Observable<GankPushDate> getGankPushDate();
     @GET("api/history/content/day/{date}")
     Observable<GankContentHistory> getGankContentHistory(
             @Path("date") String date
     );
+    @GET("{date}")
+    Call<ResponseBody> getGankWebSourceCodeByDate(@Path("date") String date);
+    @GET("{url}")
+    Call<ResponseBody> getResponseBodyByUrl(@Path("url") String s);
 }

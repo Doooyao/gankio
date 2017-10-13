@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.example.administrator.mygankio.R;
 import com.example.administrator.mygankio.gankmain.homePage.HomePresenter;
+import com.example.administrator.mygankio.gankmain.photoPopupwindow.MyPhotoPopupWindow;
 import com.example.administrator.mygankio.gankmain.searchpage.SearchFragment;
 import com.example.administrator.mygankio.gankmain.homePage.HomeFragment;
 import com.example.administrator.mygankio.gankmain.searchpage.SearchPresenter;
@@ -26,7 +27,6 @@ public class GankMainActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gankmain_activity);
         init();
-
     }
 
     private void init() {

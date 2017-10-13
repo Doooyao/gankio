@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="400dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <LinearLayout
+                android:background="@drawable/text_shadow"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+                <ImageView
+                    android:id="@+id/photo_popupwindow_download"
+                    android:src="@drawable/ic_file_download_black_24dp"
+                    android:layout_width="@dimen/little_button_size"
+                    android:layout_height="@dimen/little_button_size" />
+                <ImageView
+                    android:id="@+id/photo_popupwindow_share"
+                    android:src="@drawable/ic_file_download_black_24dp"
+                    android:layout_width="@dimen/little_button_size"
+                    android:layout_height="@dimen/little_button_size" />
+                <ImageView
+                    android:id="@+id/photo_popupwindow_collection"
+                    android:src="@drawable/ic_file_download_black_24dp"
+                    android:layout_width="@dimen/little_button_size"
+                    android:layout_height="@dimen/little_button_size" />
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

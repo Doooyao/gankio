@@ -1,12 +1,16 @@
 package com.example.administrator.mygankio.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by tdfz on 2017/9/5.
  */
 
-public class GankDateDataBean {
+public class GankDateDataBean implements Parcelable{
 
     /**
      * category : ["iOS","Android","瞎推荐","拓展资源","福利","休息视频"]
@@ -17,6 +21,25 @@ public class GankDateDataBean {
     private boolean error;
     private ResultsBean results;
     private List<String> category;
+
+
+    protected GankDateDataBean(Parcel in) {
+        error = in.readByte() != 0;
+        results = in.readParcelable(ResultsBean.class.getClassLoader());
+        category = in.createStringArrayList();
+    }
+
+    public static final Creator<GankDateDataBean> CREATOR = new Creator<GankDateDataBean>() {
+        @Override
+        public GankDateDataBean createFromParcel(Parcel in) {
+            return new GankDateDataBean(in);
+        }
+
+        @Override
+        public GankDateDataBean[] newArray(int size) {
+            return new GankDateDataBean[size];
+        }
+    };
 
     public boolean isError() {
         return error;
@@ -41,9 +64,46 @@ public class GankDateDataBean {
     public void setCategory(List<String> category) {
         this.category = category;
     }
-//// TODO: 2017/9/5  临时汉语名 以后改
-    public static class ResultsBean {
-    public List<GankBean> getAndroid() {
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (error ? 1 : 0));
+        dest.writeParcelable(results, flags);
+        dest.writeStringList(category);
+    }
+
+
+    //// TODO: 2017/9/5  临时汉语名 以后改
+    public static class ResultsBean implements Parcelable{
+        protected ResultsBean(Parcel in) {
+            Android = in.createTypedArrayList(GankBean.CREATOR);
+            iOS = in.createTypedArrayList(GankBean.CREATOR);
+            休息视频 = in.createTypedArrayList(GankBean.CREATOR);
+            拓展资源 = in.createTypedArrayList(GankBean.CREATOR);
+            瞎推荐 = in.createTypedArrayList(GankBean.CREATOR);
+            福利 = in.createTypedArrayList(GankBean.CREATOR);
+            前端 = in.createTypedArrayList(GankBean.CREATOR);
+            App = in.createTypedArrayList(GankBean.CREATOR);
+        }
+
+        public static final Creator<ResultsBean> CREATOR = new Creator<ResultsBean>() {
+            @Override
+            public ResultsBean createFromParcel(Parcel in) {
+                return new ResultsBean(in);
+            }
+
+            @Override
+            public ResultsBean[] newArray(int size) {
+                return new ResultsBean[size];
+            }
+        };
+
+        public List<GankBean> getAndroid() {
         return Android;
     }
 
@@ -91,14 +151,56 @@ public class GankDateDataBean {
         this.福利 = 福利;
     }
 
-    private List<GankBean> Android;
+        private List<GankBean> Android;
         private List<GankBean> iOS;
         private List<GankBean> 休息视频;
         private List<GankBean> 拓展资源;
         private List<GankBean> 瞎推荐;
         private List<GankBean> 福利;
+        private List<GankBean> 前端;
+        private List<GankBean> App;
 
+    public List<GankBean> get前端() {
+        return 前端;
+    }
 
+    public void set前端(List<GankBean> 前端) {
+        this.前端 = 前端;
+    }
 
+    public List<GankBean> getApp() {
+        return App;
+    }
+
+    public void setApp(List<GankBean> app) {
+        App = app;
+    }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeTypedList(Android);
+            dest.writeTypedList(iOS);
+            dest.writeTypedList(休息视频);
+            dest.writeTypedList(拓展资源);
+            dest.writeTypedList(瞎推荐);
+            dest.writeTypedList(福利);
+            dest.writeTypedList(前端);
+            dest.writeTypedList(App);
+        }
+    }
+    public List<List<GankBean>> getAllData(){
+        List<List<GankBean>> allDataList = new ArrayList<>();
+        allDataList.add(results.iOS);
+        allDataList.add(results.Android);
+        allDataList.add(results.拓展资源);
+        allDataList.add(results.瞎推荐);
+        allDataList.add(results.前端);
+        allDataList.add(results.App);
+        return allDataList;
     }
 }

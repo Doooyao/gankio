@@ -16,9 +16,6 @@ public interface HomeContract {
 
     }
 
-
-
-
     interface presenter extends BaseMvpPresenter{
         void getGankPushData();
     }

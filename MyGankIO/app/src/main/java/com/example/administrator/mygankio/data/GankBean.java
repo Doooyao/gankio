@@ -1,12 +1,15 @@
 package com.example.administrator.mygankio.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/21.
  */
 
-public class GankBean {
+public class GankBean implements Parcelable{
 
     /**
      * _id : 59ad6186421aa901c1c0a8df
@@ -30,6 +33,16 @@ public class GankBean {
     private String url;
     private boolean used;
     private String who;
+    private String srcUrl;
+
+    public String getSrcUrl() {
+        return srcUrl;
+    }
+
+    public void setSrcUrl(String srcUrl) {
+        this.srcUrl = srcUrl;
+    }
+
     private List<String> images;
 
     public String get_id() {
@@ -110,5 +123,42 @@ public class GankBean {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(_id);
+        dest.writeString(createdAt);
+        dest.writeString(desc       );
+        dest.writeString(publishedAt);
+        dest.writeString(source  );
+        dest.writeString(type     );
+        dest.writeString(url      );
+        dest.writeByte((byte) (used ? 1 : 0));
+    }
+    public static final Parcelable.Creator<GankBean> CREATOR
+            = new Parcelable.Creator<GankBean>() {
+        public GankBean createFromParcel(Parcel in) {
+            return new GankBean(in);
+        }
+
+        public GankBean[] newArray(int size) {
+            return new GankBean[size];
+        }
+    };
+    private GankBean(Parcel in) {
+        _id         = in.readString();
+        createdAt  = in.readString();
+        desc       = in.readString();
+        publishedAt= in.readString();
+        source     = in.readString();
+        type      = in.readString();
+        url       = in.readString();
+        used      = in.readByte()!= 0;
     }
 }

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/category_listitem_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.example.administrator.mygankio.customview.TimeLineView
+        android:id="@+id/home_item_body_timeline"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_width="8dp"
+        android:layout_height="match_parent" />
+    <TextView
+        android:text="2017/9/2"
+        android:id="@+id/home_item_tv_lastdate"
+        android:textColor="@color/colorTextLastDate"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/home_item_body_timeline"
+        android:layout_alignParentTop="true"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:singleLine="true"
+        android:id="@+id/home_item_body_tv"
+        android:layout_margin="8dp"
+        android:textSize="16sp"
+        android:layout_toRightOf="@+id/home_item_tv_lastdate"
+        android:textColor="@color/colorTextPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+<!--这个暂时不用 也不进行初始化-->
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_below="@+id/home_item_tv_lastdate"
+            android:layout_toRightOf="@+id/home_item_body_timeline"
+            android:id="@+id/home_item_body_category_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </LinearLayout>
+    <RelativeLayout
+        android:layout_toRightOf="@+id/home_item_tv_lastdate"
+        android:layout_below="@+id/home_item_body_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <android.support.v7.widget.CardView
+            android:layout_toRightOf="@+id/home_item_body_gankbtn"
+            android:clickable="true"
+            android:id="@+id/home_item_body_cardview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="-28dp">
+
+            <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:scaleType="centerCrop"
+                    android:id="@+id/home_item_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:foreground = "?attr/selectableItemBackground"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/home_item_body_gankbtn"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            app:cardCornerRadius="28dp"
+            android:layout_width="@dimen/middle_circlebutton_width"
+            android:layout_height="@dimen/middle_circlebutton_width">
+            <ImageView
+                android:layout_margin="8dp"
+                android:background="@drawable/ic_all_inclusive_red_400_24dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</RelativeLayout>
