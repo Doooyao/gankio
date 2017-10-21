@@ -34,6 +34,37 @@ public class GankBean implements Parcelable{
     private boolean used;
     private String who;
     private String srcUrl;
+    public GankBean(){
+
+    }
+
+    public String getReadability() {
+        return readability;
+    }
+
+    public void setReadability(String readability) {
+        this.readability = readability;
+    }
+
+    public String getGanhuo_id() {
+        if ((ganhuo_id==null||ganhuo_id=="")&&(_id==null||_id=="")){
+            return null;
+        }else if (ganhuo_id!=null&&ganhuo_id!=""){
+            return ganhuo_id;
+        }else if (_id!=null&&_id!=""){
+            return _id;
+        }else {
+            return ganhuo_id;
+        }
+    }
+
+    public void setGanhuo_id(String ganhuo_id) {
+        this.ganhuo_id = ganhuo_id;
+    }
+
+    private String readability;
+    private String ganhuo_id;
+
 
     public String getSrcUrl() {
         return srcUrl;
@@ -46,7 +77,15 @@ public class GankBean implements Parcelable{
     private List<String> images;
 
     public String get_id() {
-        return _id;
+        if ((ganhuo_id==null||ganhuo_id=="")&&(_id==null||_id=="")){
+            return null;
+        }else if (ganhuo_id!=null&&ganhuo_id!=""){
+            return ganhuo_id;
+        }else if (_id!=null&&_id!=""){
+            return _id;
+        }else {
+            return _id;
+        }
     }
 
     public void set_id(String _id) {
@@ -133,6 +172,8 @@ public class GankBean implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(_id);
+        dest.writeString(ganhuo_id);
+        dest.writeString(readability);
         dest.writeString(createdAt);
         dest.writeString(desc       );
         dest.writeString(publishedAt);
@@ -153,6 +194,8 @@ public class GankBean implements Parcelable{
     };
     private GankBean(Parcel in) {
         _id         = in.readString();
+        ganhuo_id         = in.readString();
+        readability         = in.readString();
         createdAt  = in.readString();
         desc       = in.readString();
         publishedAt= in.readString();

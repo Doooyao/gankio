@@ -14,14 +14,12 @@ import java.util.List;
 
 public interface SearchContract {
     interface View extends BaseMvpView<SearchContract.Presenter> {
-        List<GankSearchBean.ResultsBean> getResultsBeen();
-        void showRefreshRecycleView();
-        void hideRefreshRecycleView();
-        void refreshRecycleview();
-        Bundle getSearchParam();
+        int getCurrentPage();
+        String getQuery();
+        void searchByAllPage(String query);
+        void searchByCollectionPage(String query);
     }
     interface Presenter extends BaseMvpPresenter {
         void searchGank();
-
     }
 }

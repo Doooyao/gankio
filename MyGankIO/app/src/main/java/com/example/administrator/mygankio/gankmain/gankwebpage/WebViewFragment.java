@@ -40,11 +40,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 
 public class WebViewFragment extends Fragment implements WebViewContract.view ,View.OnClickListener {
-    Long collectionInfoId;
+//    Long collectionInfoId;
     SwipeRefreshLayout swipeRefreshLayout;
     WebView webView;
     View rootView;
-    FloatingActionMenu fabMenu;
+//    FloatingActionMenu fabMenu;
     float scaleThisTime;
     WebViewContract.presenter webViewPresenter;
     com.github.clans.fab.FloatingActionButton fabSun1;
@@ -67,7 +67,7 @@ public class WebViewFragment extends Fragment implements WebViewContract.view ,V
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
         configWebView(webView);
         webViewPresenter.start();
-        initFabMenu();
+//        initFabMenu();
     }
 
     private void configWebView(final WebView webView) {
@@ -170,17 +170,17 @@ public class WebViewFragment extends Fragment implements WebViewContract.view ,V
         });
     }
 
-    private void initFabMenu() {
-        fabSun1 = (com.github.clans.fab.FloatingActionButton) rootView.findViewById(R.id.menu_item_1);
-        fabSun2 = (com.github.clans.fab.FloatingActionButton) rootView.findViewById(R.id.menu_item_2);
-        fabSun3 = (com.github.clans.fab.FloatingActionButton) rootView.findViewById(R.id.menu_item_3);
-        fabSun4 = (com.github.clans.fab.FloatingActionButton) rootView.findViewById(R.id.menu_item_4);
-        //// TODO: 2017/7/6 暂时不考虑性能问题
-        fabSun1.setOnClickListener(this);
-        fabSun2.setOnClickListener(this);
-        fabSun3.setOnClickListener(this);
-        fabSun4.setOnClickListener(this);
-    }
+//    private void initFabMenu() {
+//        fabSun1 = (com.github.clans.fab.FloatingActionButton) rootView.findViewById(R.id.menu_item_1);
+//        fabSun2 = (com.github.clans.fab.FloatingActionButton) rootView.findViewById(R.id.menu_item_2);
+//        fabSun3 = (com.github.clans.fab.FloatingActionButton) rootView.findViewById(R.id.menu_item_3);
+//        fabSun4 = (com.github.clans.fab.FloatingActionButton) rootView.findViewById(R.id.menu_item_4);
+//        //// TODO: 2017/7/6 暂时不考虑性能问题
+//        fabSun1.setOnClickListener(this);
+//        fabSun2.setOnClickListener(this);
+//        fabSun3.setOnClickListener(this);
+//        fabSun4.setOnClickListener(this);
+//    }
 
 
     @Override
@@ -221,5 +221,25 @@ public class WebViewFragment extends Fragment implements WebViewContract.view ,V
     @Override
     public void setPresenter(WebViewContract.presenter presenter) {
         webViewPresenter =  checkNotNull(presenter);
+    }
+
+    @Override
+    public void showRefreshingBar() {
+
+    }
+
+    @Override
+    public void dismissRefreshingBar() {
+
+    }
+
+    @Override
+    public void showLoadingMoreBar() {
+
+    }
+
+    @Override
+    public void dismissLoadingMoreBar() {
+
     }
 }

@@ -1,11 +1,17 @@
 package com.example.administrator.mygankio.utils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import com.example.administrator.mygankio.data.ApiService;
+import com.example.administrator.mygankio.data.GankBean;
 import com.example.administrator.mygankio.data.GankSearchBean;
 import com.tinify.Options;
 import com.tinify.Source;
@@ -13,6 +19,9 @@ import com.tinify.Tinify;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -33,6 +42,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.R.attr.path;
 import static android.content.ContentValues.TAG;
 
 /**
@@ -41,8 +51,8 @@ import static android.content.ContentValues.TAG;
 
 public class ImgUtrls {
 
-    public List<String> getImgUrlListFromResultBean(GankSearchBean.ResultsBean resultsBean){
-        String s = resultsBean.getReadability();
+    public List<String> getImgUrlListFromResultBean(GankBean gankBean){
+        String s = gankBean.getReadability();
         List<String> imgs = new ArrayList<>();
         if (s!=null){
             // 按指定模式在字符串查找
@@ -115,7 +125,7 @@ public class ImgUtrls {
         return mattchImgs;
     }
 
-    public void getImgMiniFromResultBean(final GankSearchBean.ResultsBean resultsBean, final OnBitmapGetSuccess onBitmapGetSuccess){
+    public void getImgMiniFromResultBean(final GankBean resultsBean, final OnBitmapGetSuccess onBitmapGetSuccess){
         final Handler handler = new Handler();
         new Thread(new Runnable() {
             @Override
@@ -148,11 +158,11 @@ public class ImgUtrls {
 
     public static String getImgUrlFromUrl(final String url, final GetImgUrlListener getImgUrlListener){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url+"/")
+                .baseUrl("http://gank.io/")
                 .client(new OkHttpClient())
                 .build();
         ApiService apiService = retrofit.create(ApiService.class);
-        Call<ResponseBody> call = apiService.getResponseBodyByUrl("");
+        Call<ResponseBody> call = apiService.getResponseBodyByUrl(url);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -168,15 +178,24 @@ public class ImgUtrls {
                       Matcher m = r.matcher(source);
                       if (m.find( )) {
                           getImgUrlListener.getImgUrl(m.group(0));
+                      }else {
+                          getImgUrlListener.getImgUrl(null);
                       }
                       } catch (IOException e) {
                           e.printStackTrace();
+                          getImgUrlListener.getImgUrl(null);
                       }
+                  }else {
+                      getImgUrlListener.getImgUrl(null);
                   }
+                }else {
+                    System.out.println("=============");
+                    getImgUrlListener.getImgUrl(null);
                 }
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                getImgUrlListener.getImgUrl(null);
             }
         });
         return null;
@@ -205,4 +224,35 @@ public class ImgUtrls {
         return null;
     }
 
+    //保存bitmap到本地
+    public static void saveImageToGallery(Context context, Bitmap bmp) {
+        // 首先保存图片
+        File appDir = new File(Environment.getExternalStorageDirectory(), "nicelookinggirl");
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = System.currentTimeMillis() + ".jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 其次把文件插入到系统图库
+        try {
+            MediaStore.Images.Media.insertImage(context.getContentResolver(),
+                    file.getAbsolutePath(), fileName, null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // 最后通知图库更新
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file.getAbsolutePath())));
+        Log.d(TAG, "saveImageToGallery: "+"file://" + file.getAbsolutePath());
+    }
 }

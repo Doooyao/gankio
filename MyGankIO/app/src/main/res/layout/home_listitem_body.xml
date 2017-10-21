@@ -51,6 +51,7 @@
 
 
         <android.support.v7.widget.CardView
+            android:background="?android:attr/selectableItemBackground"
             android:layout_toRightOf="@+id/home_item_body_gankbtn"
             android:clickable="true"
             android:id="@+id/home_item_body_cardview"

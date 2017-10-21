@@ -15,5 +15,5 @@
             android:layout_height="match_parent">
         </WebView>
     </android.support.v4.widget.SwipeRefreshLayout>
-    <include layout="@layout/floatingactionmenu"/>
+    <!--<include layout="@layout/floatingactionmenu"/>-->
 </RelativeLayout>

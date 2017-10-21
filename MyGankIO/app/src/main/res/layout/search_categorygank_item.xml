@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:elevation="2dp"
+    android:background="#ffffff"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/search_all_listitem_clickablelayout"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="16dp"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/search_all_listitem_categorylayout"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_android_black_24dp"
+                android:id="@+id/search_all_listitem_categoryicon"
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
+            <TextView
+                android:layout_marginLeft="8dp"
+                android:textSize="14sp"
+                android:text="Android"
+                android:id="@+id/search_all_listitem_categorydesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:singleLine="true"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_below="@+id/search_all_listitem_categorylayout"
+            android:id="@+id/search_all_listitem_itemtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textSize="14sp"
+            android:layout_below="@+id/search_all_listitem_itemtitle"
+            android:id="@+id/search_all_listitem_otherinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,5 +1,8 @@
 package com.example.administrator.mygankio.gankmain.homePage;
 
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+
 import com.example.administrator.mygankio.BaseMvpPresenter;
 import com.example.administrator.mygankio.BaseMvpView;
 
@@ -9,14 +12,15 @@ import com.example.administrator.mygankio.BaseMvpView;
 
 public interface HomeContract {
     interface view extends BaseMvpView<HomeContract.presenter>{
-        void showRefreshRecycleView();
-        void hideRefreshRecycleView();
-        void refreshRecycleview();
-        HomePageListAdapter getHomePageAdapter();
+
+        void showFirstData();
+        Context takeContext();
+        void setRecycleAdapter(RecyclerView.Adapter adapter);
 
     }
 
     interface presenter extends BaseMvpPresenter{
-        void getGankPushData();
+        void refreshData();
+        void loadingMoreData();
     }
 }

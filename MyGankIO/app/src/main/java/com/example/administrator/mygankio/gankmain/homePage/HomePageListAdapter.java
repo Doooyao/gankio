@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.example.administrator.mygankio.R;
+import com.example.administrator.mygankio.customview.FootRecycleAdapter;
 import com.example.administrator.mygankio.data.ApiService;
 import com.example.administrator.mygankio.data.GankBean;
 import com.example.administrator.mygankio.data.GankContentHistory;
@@ -42,6 +43,7 @@ import com.example.administrator.mygankio.utils.WebUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -63,7 +65,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Administrator on 2017/8/31 0031.
  */
 
-public class HomePageListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder> {
+public class HomePageListAdapter extends FootRecycleAdapter{
     private Retrofit retrofit;
     private ApiService apiService;
     Context context;
@@ -76,15 +78,20 @@ public class HomePageListAdapter extends RecyclerView.Adapter <RecyclerView.View
     static final int RECOMMEND_TYPE = 1;
     static final int BODY_TYPE = 2;
     int headDataSize = 0;
+    int oneTimeAddCount = 0;
+    private OnLoadingMoreFinishListener onLoadingMoreFinishListener;
+    private OnRefreshingFinishListener onRefreshingFinishListener;
 
 
-    public HomePageListAdapter(Context context,HomeContract.view fragment){
-        this.context = context;
+    public HomePageListAdapter(HomeContract.view fragment,int count){
+        super(fragment.takeContext());
+        this.context = fragment.takeContext();
         this.fragment = fragment;
+        this.oneTimeAddCount = count;
         gankPushDate = new GankPushDate();
         gankDateDataBeanList = new ArrayList<>();
         initRetrofit();
-        findGankPushDate();
+        initListData();
     }
     private void initRetrofit() {
         retrofit = new Retrofit.Builder()
@@ -96,7 +103,7 @@ public class HomePageListAdapter extends RecyclerView.Adapter <RecyclerView.View
         apiService = retrofit.create(ApiService.class);
     }
     //获取发表干货的日期
-    private void findGankPushDate() {
+    public void initListData() {
         apiService.getGankPushDate()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -104,57 +111,39 @@ public class HomePageListAdapter extends RecyclerView.Adapter <RecyclerView.View
                     @Override
                     public void accept(@NonNull GankPushDate gankPushDate1) throws Exception {
                         gankPushDate = gankPushDate1;
-                        setGankDateDataBeanListInPosition(gankPushDate,0,9);
-                    }
-                });
-    }
-
-    //获取制定数量位置的干货
-    void setGankDateDataBeanListInPosition(final GankPushDate gankPushDate, final int startPosition, final int endPosition){
-        Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
-                for (int i = startPosition;i<=endPosition;i++){
-                    e.onNext(gankPushDate.getResults().get(i).replace("-","/"));
-                }
-            }
-        }).observeOn(Schedulers.io())
-                .flatMap(new Function<String, ObservableSource<?>>() {
-                    @Override
-                    public ObservableSource<?> apply(@NonNull String s) throws Exception {
-                            return apiService.getGankByDate(s);
-                    }
-                }).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Object>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(@NonNull Object o) {
-                        if (o instanceof GankDateDataBean){
-                            gankDateDataBeanList.add((GankDateDataBean) o);
-                            if (gankDateDataBeanList.size()==1){
-                                headDataSize = 1;
-                                notifyItemRangeInserted(0,1);
-                            }else {
-                                notifyItemInserted(gankDateDataBeanList.size());
+                        loadDataRange(0, oneTimeAddCount - 1, new OnLoadingDataListener() {
+                            @Override
+                            public void onStart() {
+                                if (onRefreshingFinishListener!=null){
+                                    onRefreshingFinishListener.onRefreshingStart();
+                                }
                             }
 
-                        }
-                    }
+                            @Override
+                            public void onComplete(List result) {
+                                gankDateDataBeanList.clear();
+                                gankDateDataBeanList.addAll(result);
+                                notifyDataSetChanged();
+                                if (onRefreshingFinishListener!=null){
+                                    onRefreshingFinishListener.onRefreshingFinish();
+                                }
+                            }
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
+                            @Override
+                            public void onNotEnoughData(List result) {
+                                gankDateDataBeanList.clear();
+                                gankDateDataBeanList.addAll(result);
+                                notifyDataSetChanged();
+                                if (onRefreshingFinishListener!=null){
+                                    onRefreshingFinishListener.noMoreData();
+                                }
+                            }
+                        });
                     }
                 });
     }
+
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -165,9 +154,11 @@ public class HomePageListAdapter extends RecyclerView.Adapter <RecyclerView.View
             case RECOMMEND_TYPE:
                 View v = LayoutInflater.from(context).inflate(R.layout.home_listitem_recommend,parent,false);
                 return new MyViewHolderRecommend(v);
-            default:
+            case BODY_TYPE:
                 View v3 = LayoutInflater.from(context).inflate(R.layout.home_listitem_body,parent,false);
                 return new MyViewHolderBody(v3);
+            default:
+                return super.onCreateViewHolder(parent,viewType);
         }
 
     }
@@ -233,6 +224,7 @@ public class HomePageListAdapter extends RecyclerView.Adapter <RecyclerView.View
                 }
             });
         }else if (holder instanceof MyViewHolderBody){
+            if (gankDateDataBeanList.get(position-1)!=null){
             //bind bodyholder
             MyViewHolderBody mbody = (MyViewHolderBody) holder;
             String date = gankPushDate.getResults().get(position-1).replace("-","/").substring(5,10);
@@ -240,7 +232,8 @@ public class HomePageListAdapter extends RecyclerView.Adapter <RecyclerView.View
             final CardView cardView =  mbody.cardView;
             final CardView gankBtn = mbody.cardGankbtn;
             TextView tvTitle = mbody.tvTitle;
-            if (gankDateDataBeanList.get(position-1).getResults().get休息视频().size()>0){
+            if (gankDateDataBeanList.get(position-1).getResults().get休息视频()!=null&&
+                    gankDateDataBeanList.get(position-1).getResults().get休息视频().size()>0){
                 tvTitle.setText(gankDateDataBeanList.get(position-1).getResults().get休息视频().get(0).getDesc());
                 tvTitle.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -296,7 +289,7 @@ public class HomePageListAdapter extends RecyclerView.Adapter <RecyclerView.View
                         }
                     }.execute(imgUrl);
                 }
-            });
+            });}
         }
 
         else if (holder instanceof MyViewHolderBanner){
@@ -304,6 +297,8 @@ public class HomePageListAdapter extends RecyclerView.Adapter <RecyclerView.View
             BannerHolderBinder bannerHolderBinder = new BannerHolderBinder();
             bannerHolderBinder.init(context);
             bannerHolderBinder.bindHolder(holder,gankDateDataBeanList.get(0));
+        }else {
+            super.onBindViewHolder(holder,position);
         }
     }
 
@@ -401,6 +396,7 @@ public class HomePageListAdapter extends RecyclerView.Adapter <RecyclerView.View
 
                     @Override
                     public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        System.out.println("errrrrrrrrrrrrrrror");
 
                     }
 
@@ -414,16 +410,9 @@ public class HomePageListAdapter extends RecyclerView.Adapter <RecyclerView.View
 
     @Override
     public int getItemViewType(int position) {
-//        if (headDataSize==0){
-//            return BODY_TYPE;
-//        }else if (headDataSize==1){
-//            switch (position){
-//                case 0:
-//                    return RECOMMEND_TYPE;
-//                default:
-//                    return BODY_TYPE;
-//            }
-//        }else {
+        if (isFootViewExist()&&position==getItemCount()-1){
+            return TYPE_FOOT;
+        }else {
             switch (position){
                 case BANNER_LOCATION:
                     return BANNER_TYPE;
@@ -432,14 +421,18 @@ public class HomePageListAdapter extends RecyclerView.Adapter <RecyclerView.View
                 default:
                     return BODY_TYPE;
             }
-//        }
+        }
     }
 
 
     @Override
     public int getItemCount() {
-        return gankDateDataBeanList.size()+headDataSize;
+        return addFootViewCount(gankDateDataBeanList.size()+headDataSize);
     }
+
+
+
+
 
 
     /***
@@ -520,5 +513,101 @@ public class HomePageListAdapter extends RecyclerView.Adapter <RecyclerView.View
                 return null;
             }
         }
+    }
+    //加载更多监听
+    public interface OnLoadingMoreFinishListener{
+        void onLoadingFinish();
+        void noMoreData();
+        void onLoadingStart();
+    }
+    public void setOnLoadingMoreFinishListener(OnLoadingMoreFinishListener onLoadingMoreFinishListener){
+        this.onLoadingMoreFinishListener = onLoadingMoreFinishListener;
+    }
+    //加载首页监听（刷新）
+    public interface OnRefreshingFinishListener{
+        void onRefreshingFinish();
+        void noMoreData();
+        void onRefreshingStart();
+    }
+    public void setOnRefreshingFinishListener(OnRefreshingFinishListener onRefreshingFinishListener){
+        this.onRefreshingFinishListener = onRefreshingFinishListener;
+    }
+
+    void loadDataRange(final int startPosition, final int endPosition, final OnLoadingDataListener onLoadingDataListener){
+            final List<GankDateDataBean> loadGankDateDataBeanList = new ArrayList<>();
+            onLoadingDataListener.onStart();
+            Observable.create(new ObservableOnSubscribe<String>() {
+                @Override
+                public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
+                    for (int i = startPosition; i <= endPosition; i++) {
+                        if (i < gankPushDate.getResults().size()) {
+                            e.onNext(gankPushDate.getResults().get(i).replace("-", "/"));
+                        } else {
+                            e.onComplete();
+                        }
+                    }
+                    e.onComplete();
+                }
+            }).observeOn(Schedulers.io())
+                    .flatMap(new Function<String, ObservableSource<?>>() {
+                        @Override
+                        public ObservableSource<?> apply(@NonNull String s) throws Exception {
+                            return apiService.getGankByDate(s);
+                        }
+                    }).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<Object>() {
+                        @Override
+                        public void onSubscribe(@NonNull Disposable d) {
+                        }
+
+                        @Override
+                        public void onNext(@NonNull Object o) {
+                            if (o instanceof GankDateDataBean) {
+                                loadGankDateDataBeanList.add((GankDateDataBean) o);
+                            }
+                        }
+
+                        @Override
+                        public void onError(@NonNull Throwable e) {
+                            loadGankDateDataBeanList.add(new GankDateDataBean());
+                            //// TODO: 2017/10/16 网络出错下次再做
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            if (loadGankDateDataBeanList.size() < endPosition - startPosition + 1) {
+                                onLoadingDataListener.onNotEnoughData(loadGankDateDataBeanList);
+                            } else {
+                                onLoadingDataListener.onComplete(loadGankDateDataBeanList);
+                            }
+                        }
+                    });
+
+    }
+    public void loadingMoreGankRange(int startPosition,int endPosition){
+        loadDataRange(startPosition, endPosition, new OnLoadingDataListener() {
+            @Override
+            public void onStart() {
+                if (onLoadingMoreFinishListener!=null){
+                    onLoadingMoreFinishListener.onLoadingStart();
+                }
+            }
+            @Override
+            public void onComplete(List result) {
+                gankDateDataBeanList.addAll(result);
+                notifyDataSetChanged();
+                if (onLoadingMoreFinishListener!=null){
+                    onLoadingMoreFinishListener.onLoadingFinish();
+                }
+            }
+            @Override
+            public void onNotEnoughData(List result) {
+                gankDateDataBeanList.addAll(result);
+                notifyDataSetChanged();
+                if (onLoadingMoreFinishListener!=null){
+                    onLoadingMoreFinishListener.noMoreData();
+                }
+            }
+        });
     }
 }

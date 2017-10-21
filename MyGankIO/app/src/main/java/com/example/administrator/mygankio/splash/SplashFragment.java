@@ -37,6 +37,26 @@ public class SplashFragment extends Fragment implements SplashContract.View{
     }
 
     @Override
+    public void showRefreshingBar() {
+
+    }
+
+    @Override
+    public void dismissRefreshingBar() {
+
+    }
+
+    @Override
+    public void showLoadingMoreBar() {
+
+    }
+
+    @Override
+    public void dismissLoadingMoreBar() {
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         splashPresenter.start();

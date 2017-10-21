@@ -32,6 +32,10 @@ public interface ApiService {
     Observable<GankSearchBean> searchGank(
             @Path("query") String query,@Path("category") String category,@Path("count") int count,@Path("page") int page
     );
+    @GET("api/data/{category}/{count}/{page}")
+    Observable<GankSearchBean> searchCategoryGank(
+            @Path("category") String category,@Path("count") int count,@Path("page") int page
+    );
     @GET("api/day/history")
     Observable<GankPushDate> getGankPushDate();
     @GET("api/history/content/day/{date}")

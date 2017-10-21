@@ -26,6 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class HomePresenter implements HomeContract.presenter {
     HomeContract.view homeFragment;
     HomePageListAdapter homePageListAdapter;
+    private int loadingMoreCount = 10;
 
     public HomePresenter (@NonNull HomeContract.view homeFragment){
         this.homeFragment = checkNotNull(homeFragment,"homeFragment cannot b null");
@@ -35,16 +36,62 @@ public class HomePresenter implements HomeContract.presenter {
 
     @Override
     public void start() {
-        getListAdapter();
-        getGankPushData();
+        addAdapter();
+        addListener();
     }
 
-    private void getListAdapter() {
-        homePageListAdapter = homeFragment.getHomePageAdapter();
+    private void addListener() {
+        homePageListAdapter.setOnLoadingMoreFinishListener(new HomePageListAdapter.OnLoadingMoreFinishListener() {
+            @Override
+            public void onLoadingFinish() {
+                homeFragment.showLoadingMoreBar();
+            }
+
+            @Override
+            public void noMoreData() {
+                homeFragment.dismissLoadingMoreBar();
+            }
+
+            @Override
+            public void onLoadingStart() {
+            }
+        });
+        homePageListAdapter.setOnRefreshingFinishListener(new HomePageListAdapter.OnRefreshingFinishListener() {
+            @Override
+            public void onRefreshingFinish() {
+                homeFragment.dismissRefreshingBar();
+                homeFragment.showLoadingMoreBar();
+                homeFragment.showFirstData();
+            }
+
+            @Override
+            public void noMoreData() {
+                homeFragment.dismissLoadingMoreBar();
+            }
+
+            @Override
+            public void onRefreshingStart() {
+                homeFragment.showRefreshingBar();
+            }
+        });
     }
 
-    public void getGankPushData() {
+    private void addAdapter() {
+        homePageListAdapter = new HomePageListAdapter(homeFragment,loadingMoreCount);
+        homeFragment.setRecycleAdapter(homePageListAdapter);
+    }
 
+
+    @Override
+    public void refreshData() {
+        homePageListAdapter.initListData();
+    }
+
+    @Override
+    public void loadingMoreData() {
+        int startPosition = homePageListAdapter.gankDateDataBeanList.size();
+        int endPosition = startPosition+ loadingMoreCount -1;
+        homePageListAdapter.loadingMoreGankRange(startPosition,endPosition);
     }
 
 }

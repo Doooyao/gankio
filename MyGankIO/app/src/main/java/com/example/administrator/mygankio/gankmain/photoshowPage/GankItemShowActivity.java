@@ -1,6 +1,7 @@
 package com.example.administrator.mygankio.gankmain.photoshowPage;
 
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +27,7 @@ import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -33,11 +35,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.mygankio.R;
 import com.example.administrator.mygankio.data.GankBean;
 import com.example.administrator.mygankio.data.GankDateDataBean;
 import com.example.administrator.mygankio.gankmain.homePage.BodyCardViewTransition;
+import com.example.administrator.mygankio.utils.ImgUtrls;
 import com.example.administrator.mygankio.utils.StringUtils;
 import com.example.administrator.mygankio.utils.WebUtils;
 
@@ -52,7 +56,7 @@ public class GankItemShowActivity extends AppCompatActivity {
     private String photoUri;
     private GankDateDataBean gankDateDataBean;
     private View photoShowView;
-    static final int SHARE_ELEMENT_DURATION = 2000;
+    static final int SHARE_ELEMENT_DURATION = 200;
     String fromwhere;
     private View gankShowView;
     private LinearLayout gankParent;
@@ -63,7 +67,6 @@ public class GankItemShowActivity extends AppCompatActivity {
     private CardView gankCard;
     private ImageView cardFabImageView;
     private Bitmap bm;
-    private ImageView photoDownLoad;
 
     public static void launch(AppCompatActivity activity, View transitionViewImgView,
                               View transitionViewImgCard,
@@ -128,6 +131,44 @@ public class GankItemShowActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+        photoParent.setOnTouchListener(new View.OnTouchListener() {
+            private float starty;
+            private float startx;
+
+            //实现下拉下载
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        startx = event.getRawX();
+                        starty = event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float translationYdistance = event.getRawY()-starty;
+                        if (translationYdistance<0){
+                            translationYdistance = 0;
+                        }else if (translationYdistance>v.getMeasuredHeight()/3){
+                            translationYdistance = v.getMeasuredHeight()/3;
+                        }
+                        ViewCompat.setTranslationY(v,translationYdistance);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        ObjectAnimator returnAnimator = new ObjectAnimator().ofFloat(v,"translationY",v.getTranslationY(),0);
+                        returnAnimator.setDuration(200);
+                        returnAnimator.setInterpolator(new LinearOutSlowInInterpolator());
+                        returnAnimator.start();
+                        if (event.getRawY()-starty>v.getMeasuredHeight()/3){
+                            ImgUtrls.saveImageToGallery(GankItemShowActivity.this,bm);
+                            Toast.makeText(GankItemShowActivity.this,"妹纸已被收入囊中=。=",Toast.LENGTH_SHORT).show();
+
+                        }
+                        break;
+
+                }
+                return true;
             }
         });
     }
@@ -199,7 +240,6 @@ public class GankItemShowActivity extends AppCompatActivity {
         gankCard = (CardView)gankShowView.findViewById(R.id.gank_show_gankcard);
         addGankList(gankParent);
         photoShowView = LayoutInflater.from(this).inflate(R.layout.show_photo_layout,null);
-        photoDownLoad = (ImageView)photoShowView.findViewById(R.id.photo_show_download);
         photoParent = (CardView) photoShowView.findViewById(R.id.photo_show_photoparent);
         photoSrvImageview = (ImageView) photoShowView.findViewById(R.id.photo_show_src);
         cardFabImageView = (ImageView)cardFab.findViewById(R.id.photo_show_nextbtnimg);
@@ -310,7 +350,6 @@ public class GankItemShowActivity extends AppCompatActivity {
         bringButtonFront(true);
         viewPager.setCurrentItem(0);
         ViewCompat.setTransitionName(cardFab,"fab");
-        ViewCompat.setTransitionName(photoDownLoad,"null");
         //在这里添加一些图片加载完成的操作
 //        ViewCompat.setTransitionName(photoSrvImageview, "image");
         ViewCompat.setTransitionName(photoParent, "cardview");

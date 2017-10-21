@@ -77,11 +77,15 @@ public class BannerHolderBinder implements IHolderBinder {
                 .get休息视频().get(0).getUrl(), new GetImgUrlListener() {
             @Override
             public void getImgUrl(String s) {
-                Glide.with(context)
-                        .load(StringUtils.formatUrl(s))
-                        .centerCrop()
-                        .into(videoSrc);
-
+                if (s!=null){
+                    Glide.with(context)
+                            .load(StringUtils.formatUrl(s))
+                            .error(context.getDrawable(R.drawable.picunload))
+                            .centerCrop()
+                            .into(videoSrc);
+                }else {
+                   videoSrc.setImageResource(R.drawable.picunload);
+                }
             }
         });
         videoView.setOnClickListener(new View.OnClickListener() {

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#03a9f4</color>
-    <color name="colorPrimaryDark">#0277bd</color>
+    <color name="colorPrimaryDark">#00ffffff</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorGray">#c7c7c7</color>
+    <color name="colorGrayLight">#55c7c7c7</color>
     <color name="colorTextPrimary">#c7c7c7</color>
     <color name="colorBlackShadow">#46000000</color>
     <color name="colorWhiteShadow">#46ffffff</color>
@@ -13,4 +14,15 @@
     <color name="colorHomePageRecommend">#ffc603</color>
     <color name="colorWhite">#ffffff</color>
     <color name="transparent">#00ffffff</color>
+    <color name="colorallColor">@color/colorPrimary</color>
+    <color name="colorandroidColor">#12c700</color>
+    <color name="coloriosColor">#000000</color>
+    <color name="colorVideoColor">#ffc603</color>
+    <color name="colorotherColor">@color/colorPink</color>
+    <color name="colorwebColor">#7D26CD</color>
+    <color name="colorappColor">#FF0000</color>
+    <color name="colorniceColor">#FFA500</color>
+    <color name="colorflycarColor">#ee82ee</color>
+
+
 </resources>

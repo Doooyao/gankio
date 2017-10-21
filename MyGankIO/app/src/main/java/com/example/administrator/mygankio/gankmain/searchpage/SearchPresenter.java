@@ -40,43 +40,8 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     @Override
     public void searchGank() {
-        Bundle b = searchFragment.getSearchParam();
-        String query = b.getString("query");
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://gank.io/")
-                .client(new OkHttpClient())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        ApiService apiService = retrofit.create(ApiService.class);
-        Observable<GankSearchBean> observable = apiService.searchGank(query, GankType.ANDROID,5,1);
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()) //这两行代码需要省了
-                .subscribe(new Observer<GankSearchBean>() {
-                    @Override
-                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-                        searchFragment.showRefreshRecycleView();
-                    }
 
-                    @Override
-                    public void onNext(@io.reactivex.annotations.NonNull GankSearchBean gankSearchBean) {
-                        List<GankSearchBean.ResultsBean> resultsBeen = gankSearchBean.getResults();
-                        searchFragment.getResultsBeen().clear();
-                        searchFragment.getResultsBeen().addAll(resultsBeen);
-                        searchFragment.refreshRecycleview();
-                        searchFragment.hideRefreshRecycleView();
-                    }
-
-                    @Override
-                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                        System.out.println(e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        System.out.println(22222);
-                    }
-                });
+                searchFragment.searchByAllPage(searchFragment.getQuery());
 
     }
 }

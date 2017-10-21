@@ -59,6 +59,8 @@ public class StringUtils {
                 return R.drawable.ic_video_library_black_24dp;
             case "前端":
                 return R.drawable.ic_html5;
+            case "福利":
+                return R.drawable.ic_directions_car_black_24dp;
             default:
                 return 0;
         }

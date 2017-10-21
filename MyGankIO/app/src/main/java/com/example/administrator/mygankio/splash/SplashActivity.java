@@ -17,11 +17,11 @@ public class SplashActivity extends AppCompatActivity {
 
     private void init() {
         SplashFragment splashFragment = (SplashFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.content_frame);
+                .findFragmentById(R.id.content_layout);
         if (splashFragment == null) {
             splashFragment = new SplashFragment();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
-                    splashFragment, R.id.content_frame);
+                    splashFragment, R.id.content_layout);
         }
 
         SplashPresenter splashPresenter = new SplashPresenter(splashFragment);

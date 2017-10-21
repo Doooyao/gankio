@@ -3,6 +3,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/homepage_banner_height">
             <ImageView
+                android:scaleType="centerCrop"
                 android:id="@+id/home_item_video_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

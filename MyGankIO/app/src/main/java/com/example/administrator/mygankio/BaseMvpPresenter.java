@@ -7,5 +7,4 @@ package com.example.administrator.mygankio;
 public interface BaseMvpPresenter{
 
     void start();
-
 }

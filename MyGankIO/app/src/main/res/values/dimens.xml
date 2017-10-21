@@ -3,12 +3,13 @@
     <dimen name="category_listitem_height">192dp</dimen>
     <dimen name="category_listitem_image_height">64dp</dimen>
     <dimen name="searchview_height">56dp</dimen>
+    <dimen name="search_alllist_item_height">88dp</dimen>
     <dimen name="categorytab_height">24dp</dimen>
     <dimen name="homepage_card_height">160dp</dimen>
     <dimen name="homepage_card_width">240dp</dimen>
     <dimen name="homepage_card_body_touchabar">56dp</dimen>
     <dimen name="homepage_card_recommend_textview_width">130dp</dimen>
-    <dimen name="appbar_height">112dp</dimen>
+    <dimen name="appbar_height">136dp</dimen>
     <dimen name="homepage_banner_width">350dp</dimen>
     <dimen name="homepage_banner_height">192dp</dimen>
     <dimen name="homepage_banner_shadow_height">80dp</dimen>
@@ -16,4 +17,8 @@
     <dimen name="touch_raise">3dp</dimen>
     <dimen name="photoshow_height">320dp</dimen>
     <dimen name="middle_circlebutton_width">56dp</dimen>
+    <dimen name="search_bar_tab_height">40dp</dimen>
+    <dimen name="search_bar_tab_width">80dp</dimen>
+    <dimen name="search_bar_tab_seekbar_height">2dp</dimen>
+    <dimen name="myprogressbar_circle_height">48dp</dimen>
 </resources>

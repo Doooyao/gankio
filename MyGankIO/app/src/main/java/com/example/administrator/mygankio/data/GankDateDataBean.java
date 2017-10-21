@@ -21,7 +21,7 @@ public class GankDateDataBean implements Parcelable{
     private boolean error;
     private ResultsBean results;
     private List<String> category;
-
+    public GankDateDataBean(){}
 
     protected GankDateDataBean(Parcel in) {
         error = in.readByte() != 0;

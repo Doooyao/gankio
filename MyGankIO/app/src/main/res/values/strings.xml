@@ -2,4 +2,27 @@
     <string name="app_name">MyGankIO</string>
     <string name="pathdata_down">M7.41,7.84L12,12.42l4.59,-4.58L18,9.25l-6,6 -6,-6z</string>
     <string name="pathdata_up">M7.41,15.41L12,10.83l4.59,4.58L18,14l-6,-6 -6,6z</string>
+    <string name="app_hometitle">这里是大写的GANK.IO</string>
+
+
+    <string name="openlibrarys">com.github.bumptech.glide:glide:3.5.2
+com.github.bumptech.glide:glide:3.5.2
+com.android.support:appcompat-v7:25.3.0
+com.android.support.constraint:constraint-layout:1.0.0-beta4
+com.android.support:design:25.3.0
+com.android.support:recyclerview-v7:25.3.0
+com.android.support:cardview-v7:25.3.0
+com.google.guava:guava:18.0
+io.reactivex.rxjava2:rxjava:2.1.1
+io.reactivex.rxjava2:rxandroid:2.0.1
+com.squareup.retrofit2:retrofit:2.3.0
+com.squareup.retrofit2:converter-gson:2.3.0
+com.squareup.retrofit2:adapter-rxjava2:2.3.0
+com.squareup.okhttp3:logging-interceptor:3.1.2
+com.tinify:tinify:latest.release
+com.google.code.gson:gson:2.5
+com.github.clans:fab:1.6.4
+com.nex3z:flow-layout:1.0.0</string>
+    <string name="helpstring">这里每天推送一张图片，一个休息视频另加大量技术干货。\n=。=在home界面点击图片card看大图，下拉图片即可下载。点击无穷符号查看每日干货\n数据内容来源 代码家 的<a href='http://gank.io'>http://gank.io</a>，非常感谢：）\n
+github：<a href='https://github.com/Doooyao/gankio'>https://github.com/Doooyao/gankio</a>\n希望大家可以开心每一天</string>/n附：背景图片来源于网络，侵删
 </resources>

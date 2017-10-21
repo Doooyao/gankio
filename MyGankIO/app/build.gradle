@@ -48,5 +48,6 @@ dependencies {
     compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.2'
     compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.2'
     compile 'com.github.clans:fab:1.6.4'
+    compile 'com.nex3z:flow-layout:1.0.0'
     testCompile 'junit:junit:4.12'
 }
